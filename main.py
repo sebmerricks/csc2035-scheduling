@@ -18,7 +18,7 @@ def generate_processes(n=5, max_at=5, min_rt=2, max_rt=10):
     p = [Process(alphabet[i], random.randint(0, max_at), random.randint(min_rt, max_rt)) for i in range(n)]
     if 0 not in [pr.at for pr in p]:
         p[random.randrange(0, n)].at = 0
-    #p = [Process("A", 4, 7), Process("B", 2, 7), Process("C", 2, 9), Process("D", 0, 6), Process("E", 0, 3)]
+    p = [Process("A", 0, 6), Process("B", 2, 7), Process("C", 1, 6), Process("D", 3, 2), Process("E", 4, 6)]
     return p
 
 
@@ -80,7 +80,7 @@ def round_robin(p):
         for pr in queue:
             pr.tr -= 1
             if pr.tr == 0:
-                pr.tt = t
+                pr.tt = t - pr.at
                 processed.append(pr)
         for pr in processed:
             if pr in queue:
@@ -105,4 +105,4 @@ if __name__ == '__main__':
     processes = generate_processes(5)
     print_table(processes)
     input("Press enter to see the answer...")
-    shortest_job_first(processes)
+    round_robin(processes)
