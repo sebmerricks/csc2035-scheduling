@@ -18,7 +18,7 @@ def generate_processes(n=5, max_at=5, min_rt=2, max_rt=10):
     p = [Process(alphabet[i], random.randint(0, max_at), random.randint(min_rt, max_rt)) for i in range(n)]
     if 0 not in [pr.at for pr in p]:
         p[random.randrange(0, n)].at = 0
-    p = [Process("A", 0, 2), Process("B", 0, 4), Process("C", 0, 1), Process("D", 0, 1), Process("E", 0, 1)]
+    #p = [Process("A", 0, 2), Process("B", 0, 4), Process("C", 0, 1), Process("D", 0, 1), Process("E", 0, 1)]
     return p
 
 
