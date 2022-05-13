@@ -18,7 +18,6 @@ def generate_processes(n=5, max_at=5, min_rt=2, max_rt=10):
     p = [Process(alphabet[i], random.randint(0, max_at), random.randint(min_rt, max_rt)) for i in range(n)]
     if 0 not in [pr.at for pr in p]:
         p[random.randrange(0, n)].at = 0
-    p = [Process("A", 0, 6), Process("B", 2, 7), Process("C", 1, 6), Process("D", 3, 2), Process("E", 4, 6)]
     return p
 
 
@@ -103,6 +102,7 @@ def print_turnaround(p):
 
 if __name__ == '__main__':
     processes = generate_processes(5)
+    #processes = [Process("A", 0, 6), Process("B", 2, 7), Process("C", 1, 6), Process("D", 3, 2), Process("E", 4, 6)]
     print_table(processes)
     input("Press enter to see the answer...")
     round_robin(processes)
