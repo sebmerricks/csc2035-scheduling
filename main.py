@@ -18,7 +18,7 @@ def generate_processes(n=5, max_at=5, min_rt=2, max_rt=10):
     p = [Process(alphabet[i], random.randint(0, max_at), random.randint(min_rt, max_rt)) for i in range(n)]
     if 0 not in [pr.at for pr in p]:
         p[random.randrange(0, n)].at = 0
-    #p = [Process("A", 0, 2), Process("B", 0, 4), Process("C", 0, 1), Process("D", 0, 1), Process("E", 0, 1)]
+    #p = [Process("A", 4, 7), Process("B", 2, 7), Process("C", 2, 9), Process("D", 0, 6), Process("E", 0, 3)]
     return p
 
 
@@ -33,11 +33,17 @@ def first_come_first_served(p):
 
 
 def shortest_job_first(p):
-    p.sort(key=lambda pr: (pr.at, pr.rt))
     t = 0
-    for pr in p:
-        t += pr.rt
-        pr.tt = t - pr.at
+    queue = [pr for pr in p if pr.at == t]
+    processed = []
+    while len(queue) > 0:
+        queue.sort(key=lambda pr: pr.rt)
+        curr = queue[0]
+        t += curr.rt
+        curr.tt = t - curr.at
+        processed.append(curr)
+        queue.remove(curr)
+        queue += [pr for pr in p if pr.at <= t and pr not in queue and pr not in processed]
     print_table(p)
     print_turnaround(p)
 
@@ -99,4 +105,4 @@ if __name__ == '__main__':
     processes = generate_processes(5)
     print_table(processes)
     input("Press enter to see the answer...")
-    round_robin(processes)
+    shortest_job_first(processes)
